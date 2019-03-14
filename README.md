@@ -2,18 +2,14 @@
 
 Apify actor for extracting data about hotels from Booking.com.
 
-Booking.com provides various types of accommodation all around the world. The user interface  
-is quite friendly for a human user, however to get the data in a machine processable format  
-is not a simple task, since there is no official Booking.com API. This is where this new Apify  
-actor comes in handy.
+Booking.com provides accommodation all over the world, so there's lots of data available on the site. The user interface is quite friendly for a human user, but getting that data in machine-processable format is not a simple task, since there is no official Booking.com API. That's where our new Booking.com actor comes in.
 
 This actor extracts hotel data from Booking.com, it can either extract directly from  
 the hotel list page or navigate to the detail page to get more detailed information.  
 The results can be ordered by any criteria supported by Booking.com.  
   
-Since Booking.com allows only 1000 search results, in case you need to download more,  
-you will need to utilize the `useFilters` attribute to tell the crawler to enqueue all the criteria  
-filtered pages. This will overcome the limit, but will significantly increase the crawling time.
+Since Booking.com allows only 1000 search results, if you need to download more,  
+you will need to utilize the `useFilters` attribute to tell the crawler to enqueue all the criteria-filtered pages. This will overcome the limit, but will significantly increase the crawling time.
 
 ## Input attributes
 
@@ -40,12 +36,12 @@ Input is a JSON object with the following properties:
 ```
 
 * `search` is the only required attribute. This is the Booking.com search query.  
-* `simple` defines if the data should be extracted just from the list page, default is `false`.  
+* `simple` defines whether the data should be extracted just from the list page, default is `false`.  
 * `useFilters` sets if the crawler should utilize criteria filters to overcome the limit for 1000 results.  
 * `minScore` specifies the minimum allowed rating of the hotel to be included in results, default is `8.4`.  
 * `maxPages` sets maximum number of pagination pages to be crawled.  
-* `checkIn` check-in date in the mm-dd-yyyy format.  
-* `checkOut` check-out date in the mm-dd-yyyy format.  
+* `checkIn` check-in date in mm-dd-yyyy format.  
+* `checkOut` check-out date in mm-dd-yyyy format.  
 * `rooms` number of rooms to be set for the search.  
 * `adults` number of adults to be set for the search.  
 * `children` number of children to be set for the search.  
@@ -77,10 +73,10 @@ Input is a JSON object with the following properties:
 ## Starting with URLs
 
 Instead of `search` INPUT attribute, it is also possible to start the crawler with an array of `startUrls`.  
-In such case all the other attributes modifying the URLs will still be applied, it is therefore suggested to  
+In this case all the other attributes modifying the URLs will still be applied, it is therefore suggested to  
 use simple urls and set all the other options using INPUT attributes instead of leaving them in the URL to  
-avoid URL parameter clashing.  
-In case the startUrl is a hotel detail page, it will be scraped. In case it is a hotel list page, the result  
+avoid URL parameters clashing.  
+If the startUrl is a hotel detail page, it will be scraped. If it is a hotel list page, the result  
 will depend on the `simple` attribute. If it's `true`, the page will be scraped, otherwise all the links to  
 detail pages will be added to the queue and scraped afterwards.  
 The `startUrls` attribute should cotain an array of URLs as follows:
@@ -101,7 +97,7 @@ The `startUrls` attribute should cotain an array of URLs as follows:
 
 ## Output examples
 
-In case of using the `simple` INPUT attribute, an example output for a single hotel can look like this:
+When using the `simple` INPUT attribute, the output for a single hotel might look like this:
 
 ```javascript
 {
@@ -122,7 +118,7 @@ In case of using the `simple` INPUT attribute, an example output for a single ho
 }
 ```
 
-Otherwise the output will be much more comprehensive, especially the `rooms` array, which will however  
+Otherwise the output will be much more comprehensive, especially the `rooms` array, which will, however,  
 contain data only if the `checkIn` and `checkOut` INPUT attributes are set.
 
 ```javascript
@@ -177,10 +173,10 @@ contain data only if the `checkIn` and `checkOut` INPUT attributes are set.
 
 ## Notes
 
-* The actor will not work without proxy, i.e. if you try running it without setting a proxy, it will
+* The actor will not work without a proxy, i.e. if you try running it without setting a proxy, it will
   fail with a message explaining exactly that.
 
-* Booking.com will only display maximum of 1000 results, if you need to circumvent this limitation,  
+* Booking.com will only display a maximum of 1000 results. If you need to circumvent this limitation,  
   you can utilize the `useFilters` INPUT attribute. However, in such case it will not be possible  
   to use any limiting filters in start URLs, because the scraper will override those.
   
